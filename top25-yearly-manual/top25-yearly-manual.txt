@@ -1,0 +1,29 @@
+List of files (in processing order).
+
+
+Data clearing:
+-- 1_quantity-top25-yearly-manual.do
+	- Imports yearly quantity for top25 brands from pdf-to-excel yearly AEB reports.
+	* Sample = 2010 - 2017
+	* Does not include cross-observations
+	* No need to prepare for future merge, because of manual collection of characteristics data
+	* Wide data
+
+-- 2_complete-top25-yearly-manual.do
+	- Imports characteristics from xls file (that were manually collected from drom.ru)
+	- Merges with previous step quantity data (reshapes long)
+	- Prepares for future analysis (creates variables).
+	* Sample=2013-2017 (due to price availability on Russian cars)
+
+
+Estimation:
+-- logit-top25-yearly-manual.do
+	- Logit demand estimation + supply-side MC recovery
+
+-- logit_lnprice-top25-yearly-manual.do
+	- Logit demand estimation with ln price specification + supply-side MC recovery
+
+-- nestedlogit-top25-yearly-manual.do
+	- Nested logit demand estimation + supply-side MC recovery
+
+Matlab files:

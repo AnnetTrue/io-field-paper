@@ -1,0 +1,50 @@
+List of files (in processing order).
+
+Data clearing:
+-- 1_quantity-top25-yearly.do
+	- Imports yearly quantity for top25 brands from pdf-to-excel yearly AEB reports.
+	* Sample = 2010-2017
+	* Does not include cross-observations
+	- Prepares for the merge with 1round-links 
+	* Matches model/brand names to 1round-links
+
+-- 1round-links-all.do
+	- Imports links of all models/configurations (scraped by webscraper)
+	- Deciphers «generation» variable 
+	- Cleans sample
+	* Sample = models/configurations sold on Russian market from 2010
+
+-- 1round-links-top25-yearly.do
+	- Prepares quantity from first step for merge with 1round-links
+	- Merges with 1round-links-all
+	* Sample = models/configurations from quantity data 2013-2017
+	- prepares a sample of links with relevant configurations for 2round scraping 1round-links-top25. 
+	* Otherwise, I had 2800 models to scrape, which is too much.
+	Criterions:
+		- time-relevant configurations for given model/year.
+		* Note: time for link defined as period for model/gen, can generally be not exact period of configuration, need to check it later!
+		- base configurations
+		* Manually defined by looking at all configurations for given model (from drom.ru description of model/gen)
+		- manual/automatic transmissions (if exist)
+		- gas only
+	* Saves all data in 1round-top25-yearly and links in 1round-links-top25-yearly
+
+—- 2round.py
+	- Scrapes characteristics for 1round-links-top25.txt (produced on the previous step) 
+
+-- 2_complete-top25-yearly.do
+	- Imports 2round scraping results
+	- Merges back with 1round scraping results (to get models names, for instance)
+	- Chooses 1 configuration for each model/year. Criterions:
+		- Sold for more than 6 months in a given year (if at least 1 such model exists, otherwise just sold in a given year)
+		- Choose configuration with minimal price for a model/year
+		- Check additionally whether horsepower is the smallest (manually looking at exceptions)
+	- Merges with quantity data.
+
+
+Estimations:
+
+
+
+
+
